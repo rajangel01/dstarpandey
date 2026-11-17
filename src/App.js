@@ -45,7 +45,7 @@ export default function App() {
 useEffect(() => {
   const themeTimer = setInterval(() => {
     setThemeIndex((previous) => (previous + 1) % 5);
-  }, 60000);
+  }, 6000);
 
   return () => clearInterval(themeTimer);
 }, []);
