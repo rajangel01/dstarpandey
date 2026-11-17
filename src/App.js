@@ -2,190 +2,553 @@ import React, { useEffect, useState } from "react";
 
 const EVENT_DATE = new Date("2026-11-22T11:30:00+05:30");
 
-function getTimeLeft() {
-  const difference = EVENT_DATE.getTime() - Date.now();
+const MAP_URL =
+  "https://www.google.com/maps/search/?api=1&query=Aradhya+Marriage+Hall%2C+Central+Jail%2C+Buxar%2C+Bihar+802101";
 
-  if (difference <= 0) {
+function getTimeLeft() {
+  const diff = EVENT_DATE.getTime() - Date.now();
+
+  if (diff <= 0) {
     return { days: 0, hours: 0, minutes: 0, seconds: 0, completed: true };
   }
 
   return {
-    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-    minutes: Math.floor((difference / (1000 * 60)) % 60),
-    seconds: Math.floor((difference / 1000) % 60),
+    days: Math.floor(diff / 86400000),
+    hours: Math.floor((diff / 3600000) % 24),
+    minutes: Math.floor((diff / 60000) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
     completed: false,
   };
 }
 
-function CountdownUnit({ value, label }) {
+
+
+function TimeBox({ value, label }) {
   return (
-    <div className="count-unit">
-      <div className="count-number">{String(value).padStart(2, "0")}</div>
-      <span>{label}</span>
+    <div className="time-box">
+      <div className="time-value">{String(value).padStart(2, "0")}</div>
+      <div className="time-label">{label}</div>
     </div>
   );
 }
 
 export default function App() {
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
+  const [time, setTime] = useState(getTimeLeft);
 
   useEffect(() => {
-    const timer = window.setInterval(() => setTimeLeft(getTimeLeft()), 1000);
-    return () => window.clearInterval(timer);
+    const timer = setInterval(() => setTime(getTimeLeft()), 1000);
+    return () => clearInterval(timer);
   }, []);
 
+  const [themeIndex, setThemeIndex] = useState(0);
+
+useEffect(() => {
+  const themeTimer = setInterval(() => {
+    setThemeIndex((previous) => (previous + 1) % 5);
+  }, 60000);
+
+  return () => clearInterval(themeTimer);
+}, []);
+
   return (
-    <main className="page-shell">
-      <div className="ambient ambient-one" />
-      <div className="ambient ambient-two" />
-
-      <section className="invitation-card">
-        <div className="top-flourish" aria-hidden="true">
-          ✦　❀　✦
-        </div>
-
-        <p className="eyebrow">A CELEBRATION OF LOVE</p>
-        <h1>Engagement Ceremony</h1>
-        <p className="intro">Two hearts, one promise, a beautiful beginning.</p>
-
-        <div className="ring-art" aria-label="Two intertwined rings">
-          <span className="ring ring-left" />
-          <span className="ring ring-right" />
-          <span className="ring-sparkle">✧</span>
-        </div>
-
-        <div className="couple">
-          <h2>
-            Deepak <span>&amp;</span> Prity
-          </h2>
-          <p>are getting engaged!</p>
-        </div>
-
-        <div className="ornament">
-          <span /> <b>THE COUNTDOWN BEGINS</b> <span />
-        </div>
-
-        {timeLeft.completed ? (
-          <div className="celebration-message">
-            <div className="heart">♥</div>
-            <h3>The beautiful day is here!</h3>
-            <p>Wishing Deepak &amp; Prity a lifetime of love and happiness.</p>
-          </div>
-        ) : (
-          <div className="countdown" aria-live="polite">
-            <CountdownUnit value={timeLeft.days} label="Days" />
-            <div className="count-separator">:</div>
-            <CountdownUnit value={timeLeft.hours} label="Hours" />
-            <div className="count-separator">:</div>
-            <CountdownUnit value={timeLeft.minutes} label="Minutes" />
-            <div className="count-separator">:</div>
-            <CountdownUnit value={timeLeft.seconds} label="Seconds" />
-          </div>
-        )}
-
-        <div className="date-panel">
-          <div className="date-icon">♡</div>
-          <div>
-            <p className="date-label">SAVE THE DATE</p>
-            <p className="date-value">22 November, 2026</p>
-          </div>
-          <div className="date-icon">♡</div>
-        </div>
-
-        <p className="closing">With love, joy &amp; a promise forever</p>
-        <div className="bottom-flourish" aria-hidden="true">
-          ❀　✦　❀
-        </div>
-      </section>
-
-      <footer>
-        MADE WITH LOVE <span>♥</span>
-      </footer>
-
+    <main className={`page theme-${themeIndex}`}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Great+Vibes&family=Montserrat:wght@300;400;500;600&display=swap');
 
-        * { box-sizing: border-box; }
-        body { margin: 0; }
-        .page-shell {
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          background: #eadbd6;
+          font-family: 'Montserrat', sans-serif;
+        }
+
+        .page {
           min-height: 100vh;
-          position: relative;
-          overflow: hidden;
+          padding: 30px 16px;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 42px 18px;
           background:
-            radial-gradient(circle at 12% 18%, rgba(239, 190, 185, .34), transparent 27%),
-            radial-gradient(circle at 88% 82%, rgba(221, 184, 130, .24), transparent 28%),
-            #fbf6f0;
-          color: #563b3b;
-          font-family: 'DM Sans', sans-serif;
+            radial-gradient(circle at 10% 10%, rgba(255,255,255,.65), transparent 35%),
+            radial-gradient(circle at 90% 90%, rgba(177,112,112,.18), transparent 35%),
+            #eadbd6;
         }
-        .ambient {
-          position: absolute; width: 260px; height: 260px; border: 1px solid rgba(174, 128, 91, .2);
-          border-radius: 50%; pointer-events: none;
+
+        .invitation {
+          width: 100%;
+          max-width: 790px;
+          position: relative;
+          overflow: hidden;
+          padding: 55px 55px 42px;
+          text-align: center;
+          color: #f9ead5;
+          background:
+            radial-gradient(ellipse at top, rgba(169,100,111,.55), transparent 65%),
+            linear-gradient(145deg, #542b3b, #351a29 65%, #492332);
+          box-shadow: 0 25px 80px rgba(54,25,36,.25);
+          border: 1px solid #c5a06d;
+          outline: 1px solid rgba(197,160,109,.55);
+          outline-offset: -10px;
+          animation: reveal 1.2s ease both;
         }
-        .ambient-one { top: -135px; left: -110px; box-shadow: 0 0 0 22px rgba(174,128,91,.035), 0 0 0 44px rgba(174,128,91,.025); }
-        .ambient-two { bottom: -155px; right: -100px; width: 330px; height: 330px; box-shadow: 0 0 0 22px rgba(174,128,91,.035), 0 0 0 44px rgba(174,128,91,.025); }
-        .invitation-card {
-          width: min(100%, 760px); position: relative; z-index: 1; text-align: center;
-          padding: 42px 54px 30px; border: 1px solid #e8d8c8; border-radius: 8px;
-          background: rgba(255, 252, 248, .91);
-          box-shadow: 0 22px 70px rgba(91, 57, 48, .10), inset 0 0 0 7px rgba(255,255,255,.7);
+
+        @keyframes reveal {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        .invitation-card:before, .invitation-card:after {
-          content: ''; position: absolute; inset: 13px; border: 1px solid rgba(194, 157, 119, .35); pointer-events: none;
+
+        .invitation::before,
+        .invitation::after {
+          position: absolute;
+          content: "❧";
+          color: rgba(225,190,143,.18);
+          font-size: 150px;
+          pointer-events: none;
         }
-        .invitation-card:after { inset: 19px; border-color: rgba(194, 157, 119, .16); }
-        .top-flourish, .bottom-flourish { color: #b88b61; letter-spacing: 5px; font-size: 19px; }
-        .eyebrow { margin: 16px 0 8px; color: #ad8068; font-size: 10px; font-weight: 700; letter-spacing: 4px; }
-        h1 { margin: 0; font: 500 clamp(36px, 6vw, 57px)/1.05 'Cormorant Garamond', serif; color: #714a49; }
-        .intro { margin: 12px 0 0; color: #987a70; font: italic 17px 'Cormorant Garamond', serif; }
-        .ring-art { height: 104px; position: relative; width: 190px; margin: 20px auto 4px; }
-        .ring { position: absolute; top: 12px; width: 76px; height: 76px; border: 7px solid #c99b59; border-radius: 50%; transform: rotate(-25deg); box-shadow: inset 2px 2px 5px rgba(255,255,255,.9), 2px 3px 5px rgba(105,69,40,.16); }
-        .ring-left { left: 34px; border-color: #d9b777; }
-        .ring-right { right: 34px; border-color: #b88754; }
-        .ring-sparkle { position: absolute; top: 0; left: 88px; color: #bd8e54; font-size: 23px; }
-        .couple h2 { margin: 0; font: 600 clamp(39px, 7vw, 64px)/1 'Cormorant Garamond', serif; color: #704748; }
-        .couple h2 span { color: #c28d75; font-style: italic; font-weight: 400; padding: 0 8px; }
-        .couple p { margin: 8px 0 25px; color: #a47d72; font: italic 20px 'Cormorant Garamond', serif; }
-        .ornament { display: flex; align-items: center; justify-content: center; gap: 12px; color: #b58a69; font-size: 9px; letter-spacing: 2.5px; }
-        .ornament span { width: 52px; height: 1px; background: #dec9b4; }
-        .countdown { display: flex; justify-content: center; align-items: center; gap: clamp(8px, 2.3vw, 22px); margin: 23px 0 27px; }
-        .count-unit { min-width: clamp(58px, 12vw, 104px); }
-        .count-number { font: 600 clamp(32px, 6vw, 52px)/1.1 'Cormorant Garamond', serif; color: #754d4d; font-variant-numeric: tabular-nums; }
-        .count-unit span { display: block; margin-top: 7px; color: #a18478; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
-        .count-separator { color: #c49b7d; font: 36px 'Cormorant Garamond', serif; transform: translateY(-8px); }
-        .date-panel { display: flex; align-items: center; justify-content: center; gap: 24px; margin: 0 auto; padding: 14px 18px; width: min(100%, 390px); border-top: 1px solid #eadbcb; border-bottom: 1px solid #eadbcb; }
-        .date-icon { color: #c28e7c; font-size: 22px; }
-        .date-label { margin: 0 0 3px; color: #a98470; font-size: 9px; letter-spacing: 3px; font-weight: 700; }
-        .date-value { margin: 0; color: #714b49; font: 600 23px 'Cormorant Garamond', serif; }
-        .closing { margin: 22px 0 13px; color: #a18478; font: italic 17px 'Cormorant Garamond', serif; }
-        .celebration-message { margin: 22px 0 26px; }
-        .celebration-message h3 { margin: 5px 0; font: 600 30px 'Cormorant Garamond', serif; color: #754d4d; }
-        .celebration-message p { color: #987a70; font-size: 13px; }
-        .heart { color: #c98783; font-size: 30px; animation: pulse 1.3s infinite; }
-        footer { position: absolute; bottom: 14px; color: #b39a8b; font-size: 8px; letter-spacing: 3px; }
-        footer span { color: #c98783; }
-        @keyframes pulse { 50% { transform: scale(1.18); } }
-        @media (max-width: 560px) {
-          .page-shell { padding: 25px 12px 45px; }
-          .invitation-card { padding: 35px 22px 25px; }
-          .invitation-card:before { inset: 10px; }
-          .invitation-card:after { inset: 15px; }
-          .eyebrow { letter-spacing: 2.5px; }
-          .intro { font-size: 15px; }
-          .ring-art { transform: scale(.88); margin-top: 13px; margin-bottom: -2px; }
-          .countdown { gap: 5px; }
-          .count-unit { min-width: 54px; }
-          .count-unit span { letter-spacing: 1px; font-size: 8px; }
-          .count-separator { font-size: 25px; }
-          .date-panel { gap: 12px; }
-          .date-value { font-size: 21px; }
+
+        .invitation::before {
+          top: -40px;
+          left: -25px;
+          transform: rotate(-35deg);
         }
+
+        .invitation::after {
+          bottom: -40px;
+          right: -25px;
+          transform: rotate(145deg);
+        }
+
+        .content {
+          position: relative;
+          z-index: 1;
+        }
+
+        .ornament {
+          color: #e5c28e;
+          font-size: 34px;
+          margin-bottom: 15px;
+        }
+
+        .top-label {
+          font-size: 10px;
+          letter-spacing: 5px;
+          text-transform: uppercase;
+          color: #e8cba3;
+        }
+
+        .heading {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(38px, 7vw, 58px);
+          font-weight: 300;
+          line-height: 1.05;
+          margin-top: 17px;
+          color: #fff1df;
+        }
+
+        .subheading {
+          font-size: 9px;
+          letter-spacing: 4px;
+          color: #d7b58e;
+          margin-top: 12px;
+        }
+
+        .divider {
+          margin: 25px auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 14px;
+          color: #d9b47e;
+        }
+
+        .divider::before,
+        .divider::after {
+          content: "";
+          width: 75px;
+          height: 1px;
+          background: #b48b65;
+        }
+
+        .names {
+          font-family: 'Great Vibes', cursive;
+          font-size: clamp(75px, 13vw, 112px);
+          line-height: 1.1;
+          color: #f0d2a3;
+          text-shadow: 0 4px 20px rgba(0,0,0,.2);
+        }
+
+        .and {
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-size: 29px;
+          color: #fff0dc;
+          margin: 0;
+        }
+
+        .promise {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 22px;
+          font-style: italic;
+          color: #e8d1b7;
+          margin-top: 12px;
+        }
+
+        .date-pill {
+          display: inline-block;
+          border-top: 1px solid #b58b61;
+          border-bottom: 1px solid #b58b61;
+          padding: 12px 25px;
+          margin-top: 24px;
+          color: #f0d4a9;
+          letter-spacing: 3px;
+          font-size: 11px;
+        }
+
+        .rings {
+          height: 54px;
+          margin: 22px auto 8px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .ring {
+          width: 38px;
+          height: 38px;
+          border: 4px solid #d9b77e;
+          border-radius: 50%;
+          margin: 0 -5px;
+          position: relative;
+        }
+
+        .ring::after {
+          content: "✦";
+          position: absolute;
+          top: -14px;
+          left: 9px;
+          font-size: 14px;
+          color: #f0d4a9;
+        }
+
+        .count-heading {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 30px;
+          font-weight: 400;
+          color: #f0d7b8;
+          margin-top: 8px;
+        }
+
+        .count-caption {
+          font-size: 9px;
+          letter-spacing: 3px;
+          color: #cba985;
+          margin-top: 5px;
+          margin-bottom: 18px;
+        }
+
+        .countdown {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 12px;
+          max-width: 510px;
+          margin: 0 auto;
+        }
+
+        .time-box {
+          border: 1px solid rgba(218,183,128,.65);
+          background: rgba(255,255,255,.055);
+          padding: 13px 5px 11px;
+        }
+
+        .time-value {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(30px, 5vw, 42px);
+          font-weight: 600;
+          color: #f1d4a6;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .time-label {
+          font-size: 8px;
+          letter-spacing: 2px;
+          color: #d5b998;
+          margin-top: 4px;
+          text-transform: uppercase;
+        }
+
+        .event-info {
+          margin-top: 30px;
+          padding: 20px 10px 0;
+          border-top: 1px solid rgba(207,171,125,.4);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 22px 12px;
+        }
+
+        .info-item {
+          text-align: center;
+        }
+
+        .info-icon {
+          color: #e0bc8d;
+          font-size: 19px;
+          margin-bottom: 7px;
+        }
+
+        .info-label {
+          font-size: 9px;
+          letter-spacing: 3px;
+          color: #cba984;
+          text-transform: uppercase;
+          margin-bottom: 6px;
+        }
+
+        .info-value {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 23px;
+          color: #fff0dc;
+        }
+
+        .info-description {
+          font-size: 10px;
+          line-height: 1.7;
+          color: #d4bda5;
+          margin-top: 4px;
+        }
+
+        .venue {
+          grid-column: 1 / -1;
+          padding-top: 17px;
+          border-top: 1px solid rgba(207,171,125,.25);
+        }
+
+        .map-link {
+          display: inline-block;
+          margin-top: 12px;
+          padding: 10px 20px;
+          border: 1px solid #cba779;
+          text-decoration: none;
+          color: #f0d6ae;
+          font-size: 9px;
+          letter-spacing: 2px;
+          transition: .3s;
+        }
+
+        .map-link:hover {
+          background: #cba779;
+          color: #351a29;
+        }
+
+        .closing {
+          font-family: 'Great Vibes', cursive;
+          color: #e8c89c;
+          font-size: 38px;
+          margin-top: 28px;
+        }
+
+        .footer-line {
+          color: #c59b70;
+          font-size: 17px;
+          margin-top: 10px;
+        }
+
+        @media(max-width: 560px) {
+          .page {
+            padding: 15px 10px;
+          }
+
+          .invitation {
+            padding: 45px 23px 30px;
+            outline-offset: -7px;
+          }
+
+          .top-label {
+            letter-spacing: 3px;
+            font-size: 9px;
+          }
+
+          .subheading {
+            letter-spacing: 2px;
+            font-size: 8px;
+          }
+
+          .date-pill {
+            letter-spacing: 1.5px;
+            font-size: 9px;
+            padding: 11px 15px;
+          }
+
+          .countdown {
+            gap: 6px;
+          }
+
+          .time-box {
+            padding: 12px 2px 9px;
+          }
+
+          .time-label {
+            letter-spacing: 1px;
+            font-size: 7px;
+          }
+
+          .info-value {
+            font-size: 20px;
+          }
+
+          .info-description {
+            font-size: 9px;
+          }
+
+          .closing {
+            font-size: 34px;
+          }
+        }
+          /* Smooth automatic theme transition */
+
+.page {
+  transition: background 2s ease;
+}
+
+.invitation {
+  transition:
+    background 2s ease,
+    filter 2s ease,
+    box-shadow 2s ease;
+}
+
+/* Royal Burgundy */
+.theme-0 .invitation {
+  filter: hue-rotate(0deg);
+}
+
+/* Blush Romance */
+.theme-1 .invitation {
+  filter: hue-rotate(325deg) saturate(0.9);
+}
+
+/* Royal Ivory */
+.theme-2 .invitation {
+  filter: hue-rotate(12deg) sepia(0.12) brightness(1.12);
+}
+
+/* Emerald Elegance */
+.theme-3 .invitation {
+  filter: hue-rotate(105deg) saturate(0.85);
+}
+
+/* Midnight Royal */
+.theme-4 .invitation {
+  filter: hue-rotate(190deg) saturate(0.8);
+}
+
+.theme-0 {
+  background: #eadbd6;
+}
+
+.theme-1 {
+  background: #f0dce3;
+}
+
+.theme-2 {
+  background: #eee7d6;
+}
+
+.theme-3 {
+  background: #dce6dc;
+}
+
+.theme-4 {
+  background: #dce0eb;
+}
       `}</style>
+
+      <div className="invitation">
+        <div className="content">
+          <div className="ornament">❧ ✦ ❧</div>
+
+          <div className="top-label">With the blessings of our families</div>
+
+          <h1 className="heading">Engagement Ceremony</h1>
+
+          <div className="subheading">A BEAUTIFUL BEGINNING OF FOREVER</div>
+
+          <div className="divider">✦</div>
+
+          <div className="names">Deepak</div>
+          <div className="and">&</div>
+          <div className="names">Prity</div>
+
+          <div className="promise">
+            Two hearts, one promise, a lifetime of love.
+          </div>
+
+          <div className="date-pill">
+            ✦ &nbsp; SUNDAY · 22 NOVEMBER 2026 &nbsp; ✦
+          </div>
+
+          <div className="rings">
+            <div className="ring"></div>
+            <div className="ring"></div>
+          </div>
+
+          <h2 className="count-heading">Counting Down to Forever</h2>
+
+          <p className="count-caption">EVERY SECOND BRINGS US CLOSER</p>
+
+          {time.completed ? (
+            <div className="closing">The celebration begins! ♥</div>
+          ) : (
+            <div className="countdown">
+              <TimeBox value={time.days} label="Days" />
+              <TimeBox value={time.hours} label="Hours" />
+              <TimeBox value={time.minutes} label="Minutes" />
+              <TimeBox value={time.seconds} label="Seconds" />
+            </div>
+          )}
+
+          <div className="event-info">
+            <div className="info-item">
+              <div className="info-icon">♡</div>
+              <div className="info-label">The Date</div>
+              <div className="info-value">22 November</div>
+              <div className="info-description">Sunday · 2026</div>
+            </div>
+
+            <div className="info-item">
+              <div className="info-icon">◷</div>
+              <div className="info-label">The Time</div>
+              <div className="info-value">11:30 AM</div>
+              <div className="info-description">Indian Standard Time</div>
+            </div>
+
+            <div className="info-item venue">
+              <div className="info-icon">⌖</div>
+              <div className="info-label">The Venue</div>
+              <div className="info-value">Aradhya Marriage Hall</div>
+              <div className="info-description">
+                Central Jail, Buxar, Bihar – 802101
+              </div>
+
+              <a
+                className="map-link"
+                href={MAP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ✦ &nbsp; VIEW LOCATION
+              </a>
+            </div>
+          </div>
+
+          <div className="closing">A New Chapter Begins...</div>
+
+          <div className="footer-line">❧ ♥ ❧</div>
+        </div>
+      </div>
     </main>
   );
 }
