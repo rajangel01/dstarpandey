@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Feedback from "./Feedback";
 
 const EVENT_DATE = new Date("2026-11-22T11:30:00+05:30");
 
@@ -547,6 +548,7 @@ useEffect(() => {
           <div className="closing">A New Chapter Begins...</div>
 
           <div className="footer-line">❧ ♥ ❧</div>
+          <Feedback />
         </div>
       </div>
     </main>

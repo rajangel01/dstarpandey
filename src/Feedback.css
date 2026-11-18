@@ -1,0 +1,163 @@
+
+.feedback-section {
+  padding: 65px 20px;
+  background: linear-gradient(135deg, #2b0715, #58152c, #2b0715);
+  color: #fff;
+}
+
+.feedback-container {
+  max-width: 750px;
+  margin: auto;
+}
+
+.feedback-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.feedback-heading span {
+  color: #e8c77a;
+  letter-spacing: 3px;
+  font-size: 12px;
+}
+
+.feedback-heading h2 {
+  font-family: "Cormorant Garamond", serif;
+  color: #f5d994;
+  font-size: 42px;
+  margin: 12px 0;
+}
+
+.feedback-heading p {
+  color: #f1dfe4;
+}
+
+.feedback-card {
+  background: #fffaf4;
+  color: #3e1825;
+  padding: 30px;
+  border-radius: 15px;
+  border: 2px solid #d5b36a;
+  box-shadow: 0 10px 35px #0005;
+}
+
+.feedback-field {
+  margin-bottom: 20px;
+}
+
+.feedback-field label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.feedback-field input,
+.feedback-field textarea {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #d9c6b4;
+  border-radius: 7px;
+  background: #fff;
+  color: #3e1825;
+  outline: none;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.feedback-field input:focus,
+.feedback-field textarea:focus {
+  border-color: #a56b35;
+  box-shadow: 0 0 0 2px #d5b36a44;
+}
+
+.feedback-submit {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 7px;
+  background: linear-gradient(90deg, #8c2948, #53152c);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.feedback-submit:hover {
+  background: #a13b5c;
+  transform: translateY(-2px);
+}
+
+.feedback-comments {
+  margin-top: 45px;
+}
+
+.feedback-comments h3 {
+  color: #f5d994;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 30px;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.no-feedback {
+  text-align: center;
+  color: #f1dfe4;
+}
+
+.feedback-comment {
+  background: #fffaf4;
+  color: #3e1825;
+  padding: 18px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border-left: 4px solid #d5b36a;
+  overflow-wrap: anywhere;
+}
+
+.comment-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.comment-top strong {
+  color: #842c49;
+  font-size: 17px;
+}
+
+.comment-top span {
+  color: #8a777c;
+  font-size: 12px;
+}
+
+.feedback-comment h4 {
+  margin: 12px 0 5px;
+}
+
+.feedback-comment p {
+  margin-bottom: 0;
+  line-height: 1.6;
+}
+
+.feedback-footer {
+  text-align: center;
+  color: #e8c77a;
+  margin-top: 35px;
+  font-size: 14px;
+}
+
+@media (max-width: 600px) {
+  .feedback-section {
+    padding: 45px 15px;
+  }
+
+  .feedback-card {
+    padding: 20px;
+  }
+
+  .feedback-heading h2 {
+    font-size: 34px;
+  }
+}
