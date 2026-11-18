@@ -87,7 +87,6 @@ function Feedback() {
               <input
                 type="text"
                 name="subject"
-                placeholder="e.g. Best Wishes"
                 value={form.subject}
                 onChange={handleChange}
               />
